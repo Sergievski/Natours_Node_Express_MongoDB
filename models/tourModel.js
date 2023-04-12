@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const validator = require('validator'); // there is an example in line 13
+//const validator = require('validator'); // there is an example in line 13
 
 const tourSchema = new mongoose.Schema(
   {
