@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
-    "start:prod": "NODE_ENV=production nodemon server.js",
-    "debug": "ndb server.js"
+    "start:prod": " set NODE_ENV=production&& nodemon server.js",
+    "debug": "ndb server.js",
+    "debug:prod": "set NODE_ENV=production&& ndb server.js"
   },
   "author": "Stas",
   "license": "ISC",
@@ -19,7 +20,7 @@
     "validator": "^13.9.0"
   },
   "devDependencies": {
-    "eslint": "^8.37.0",
+    "eslint": "^8.38.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
