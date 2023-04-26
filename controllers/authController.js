@@ -52,7 +52,7 @@ exports.login = catchAsync(async (req, res, next) => {
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-  // 1) Getting token and chack of its there
+  // 1) Getting token and check of its there
   let token;
   //console.log(req.headers.authorization);
   if (
@@ -93,3 +93,28 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.restrictTo =
+  (...roles) =>
+  (req, res, next) => {
+    // roles ['admin' , 'lead-guide'] role='user'
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this', 403)
+      );
+    }
+    next();
+  };
+
+//REGULAR SYNTAX :
+
+// return (req, res, next) => {
+//   // roles ['admin' , 'lead-guide'] role='user'
+//   if (!roles.includes(req.user.role)) {
+//     return next(
+//       new AppError('You do not have permission to perform this', 403)
+//     );
+//   }
+//   next();
+// };
+// };
