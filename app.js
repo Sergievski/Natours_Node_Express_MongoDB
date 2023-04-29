@@ -5,32 +5,41 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRouts');
 const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
 
 const app = express();
 
-//   GLOBAL  MIDLEWARE
+// 1)   GLOBAL  MIDLEWARE
 
+//Set security http headers
+app.use(helmet());
+
+// Development loging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+//Limit requiests ftom same IP
 const limiter = rateLimit({
   max: 100,
   windowM: 60 * 60 * 1000,
   message: 'Too many requests from this IP , please try again in a hour',
 });
-
 app.use('/api', limiter);
 
-app.use(express.json());
+// Body parser, reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
+
+//Serving static files
 app.use(express.static(`${__dirname}/public`));
 
+//Test middleware
 app.use((req, res, next) => {
   //console.log(req.headers);
   next();
 });
 
-///  ROUTES  ///
+// 2) ROUTES
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
