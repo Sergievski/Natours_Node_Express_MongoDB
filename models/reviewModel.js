@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
-const slugify = require('slugify');
+// const slugify = require('slugify');
 
 const reviewSchema = new mongoose.Schema(
   {
     review: {
       type: String,
       required: [true, 'A review must contain description'],
-      maxlength: [300, 'Max length is 300'],
-      minlength: [5, 'Min length is 5'],
     },
     rating: {
       type: Number,
-      required: [true, 'A must contain a raiting'],
+      min: 1,
+      max: 5,
     },
     createdAt: {
       type: Date,
@@ -22,12 +21,14 @@ const reviewSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
+        required: [true, 'Review must belong to user.'],
       },
     ],
     tour: [
       {
         type: mongoose.Schema.ObjectId,
         ref: 'Tour',
+        required: [true, 'Review must belong to a tour.'],
       },
     ],
   },
