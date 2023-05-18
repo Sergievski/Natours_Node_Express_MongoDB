@@ -39,13 +39,7 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-//document middleware :  runs before the .save() and .create()
-// reviewSchema.pre('save', function (next) {
-//   this.slug = slugify(this.name, { lower: true });
-//   next();
-// });
-
-// QUERY MIDDLEWARE :
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 
 reviewSchema.pre(/^find/, function (next) {
   //   this.populate({
