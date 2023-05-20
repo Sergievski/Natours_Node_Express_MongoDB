@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const AppError = require('./utils/appError');
@@ -13,7 +14,15 @@ const hpp = require('hpp');
 
 const app = express();
 
+//pug - views
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
 // 1)   GLOBAL  MIDLEWARE
+
+//Serving static files
+//app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Set security http headers
 app.use(helmet());
@@ -54,9 +63,6 @@ app.use(
   })
 );
 
-//Serving static files
-app.use(express.static(`${__dirname}/public`));
-
 //Test middleware
 app.use((req, res, next) => {
   //console.log(req.headers);
@@ -64,6 +70,10 @@ app.use((req, res, next) => {
 });
 
 // 2) ROUTES
+
+app.get('/', (req, res) => {
+  res.status(200).render('base');
+});
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
