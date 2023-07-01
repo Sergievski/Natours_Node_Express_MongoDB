@@ -1,8 +1,8 @@
+/* eslint-disable */
 import axios from 'axios';
 
-/* eslint-disable */
 const stripe = Stripe(
-  'pk_test_51NMv3PICrCtrlQJ2iuO6Qi3QGNLe5uh3QJpkDtnPuXPaJ2t5aLbE5reHrUGurUygObzF89X7tvfxUQ74BrbKrOf100UnRfrS8b'
+  'pk_test_51NP3zNK4tyig9sHxqf4VKseAflrZ1KZMXBoD0KldUJrFEIS4mgzh9hI2PyxUgJcjVlDh0UzgU7Im2uuFp9RFTWh90038O0INB3'
 );
 
 export const bookTour = async (tourId) => {
