@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const compression = require('compression');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -25,6 +26,11 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1)   GLOBAL  MIDLEWARE
+
+// Implement CORS
+app.use(cors()); // access control allow origin
+
+app.options('*', cors());
 
 //Serving static files
 //app.use(express.static(`${__dirname}/public`));
