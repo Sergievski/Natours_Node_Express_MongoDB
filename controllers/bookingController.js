@@ -37,7 +37,9 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     product = await stripe.products.create({
       name: tour.name, // Replace with your desired product name
       description: tour.description, // Optional: Replace with your product description
-      images: [`https://www.natours.dev/img/tours/${tour.imageCover}`], // Optional: Replace with your product image URL(s)
+      images: [
+        `${req.protocol}://${req.get('host')}/img/tours/${tour.imageCover}`,
+      ], // Optional: Replace with your product image URL(s)
     });
   }
 
@@ -83,8 +85,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 const createBookingCheckout = async (session) => {
   const tour = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email })).id;
-  const priceObj = await stripe.prices.retrieve(session.line_items[0].price);
-  const price = priceObj.unit_amount / 100;
+  const price = session.amount_total / 100;
   await Booking.create({ tour, user, price });
 };
 
